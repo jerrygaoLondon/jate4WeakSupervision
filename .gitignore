@@ -10,3 +10,22 @@ buildNumber.properties
 
 # Avoid ignoring Maven wrapper jar file (.jar files are usually ignored)
 !/.mvn/wrapper/maven-wrapper.jar
+*.iml
+classes/*
+out/*
+.iml
+*.asc
+*.gif
+*.DS_Store
+*.log
+index/*
+example/*
+data/*
+src/test/resources/eval/ACL_RD-TEC/corpus/full/xml/*
+testdata/solr-testbed/*/data/*
+.DS_Store
+debug/*
+*.tar.gz
+src/test/resource/eval/ACL_RD-TEC/corpus/full/debug/
+*.json
+.idea/

@@ -1,0 +1,3 @@
+#seed term patterns
+default	(\bNN\b|\bNNP\b|\bNNS\b)
+default	(((\bNN\b|\bNNP\b|\bNNS\b|JJ) ) (\bNN\b|\bNNP\b|\bNNS\b))

@@ -21,7 +21,7 @@ out/*
 index/*
 example/*
 data/*
-src/test/resources/eval/ACL_RD-TEC/corpus/full/xml/*
+src/test/resources/eval/ACL_RD-TEC/corpus/full/*
 testdata/solr-testbed/*/data/*
 .DS_Store
 debug/*

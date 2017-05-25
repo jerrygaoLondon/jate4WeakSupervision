@@ -39,17 +39,17 @@ public class Evaluator extends Scorer{
     public static void main(String[] args) throws IOException, ParseException {
         String workingDir = System.getProperty("user.dir");
         Lemmatiser lemmatiser = new Lemmatiser(new EngLemmatiser(
-                Paths.get(workingDir, "src", "test", "resource", "lemmatiser").toString(), false, false
+                Paths.get(workingDir, "src", "test", "resources", "lemmatiser").toString(), false, false
         ));
-        Path GENIA_CORPUS_CONCEPT_FILE = Paths.get(workingDir, "src", "test", "resource",
+        Path GENIA_CORPUS_CONCEPT_FILE = Paths.get(workingDir, "src", "test", "resources",
                 "eval", "GENIA", "concept.txt");
-        Path ACL_1_CORPUS_CONCEPT_FILE = Paths.get(workingDir, "src", "test", "resource",
+        Path ACL_1_CORPUS_CONCEPT_FILE = Paths.get(workingDir, "src", "test", "resources",
                 "eval", "ACL_RD-TEC", "terms.txt");
 
         String datasetName = "aclrdtec1";//args[0];
-        String ateOutputFolder = "C:\\Data\\jate\\jate4supervision\\acl-1-index\\baseline\\";// args[1];
+        String ateOutputFolder = "C:\\Data\\jate\\jate4supervision\\acl-1-index\\training_data\\setting3";// args[1];
         String ateOutputType = "json";//args[2];
-        String outFile = "C:\\Data\\jate\\jate4supervision\\acl-1-index\\baseline-eval\\baseline_eval.csv";//args[3];
+        String outFile = "C:\\Data\\jate\\jate4supervision\\acl-1-index\\training_data\\acl_1_seed_set_eval.csv";//args[3];
         String gsFile = ACL_1_CORPUS_CONCEPT_FILE.toString();//args[4];
 
 

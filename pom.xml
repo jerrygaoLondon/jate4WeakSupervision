@@ -15,7 +15,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven-install-plugin.version>2.5.2</maven-install-plugin.version>
-        <jate.version>2.0-beta.7</jate.version>
+        <jate.version>2.0-beta.8</jate.version>
         <tika.version>1.10</tika.version>
         <dragontool.version>1.3.3</dragontool.version>
         <junit.version>4.12</junit.version>
@@ -43,7 +43,7 @@
             <artifactId>jate</artifactId>
             <version>${jate.version}</version>
             <scope>system</scope>
-            <systemPath>${basedir}/lib/jate-2.0-beta.7.jar</systemPath>
+            <systemPath>${basedir}/lib/jate-2.0-beta.8.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>org.apache.solr</groupId>

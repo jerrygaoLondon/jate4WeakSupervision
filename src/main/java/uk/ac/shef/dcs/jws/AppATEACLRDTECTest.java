@@ -2,6 +2,7 @@ package uk.ac.shef.dcs.jws;
 
 import com.sun.tools.javac.util.Assert;
 import org.apache.log4j.Logger;
+import org.apache.log4j.spi.NOPLogger;
 import org.apache.solr.client.solrj.embedded.EmbeddedSolrServer;
 import org.apache.solr.common.SolrException;
 import uk.ac.shef.dcs.jate.JATEException;
@@ -57,8 +58,17 @@ public class AppATEACLRDTECTest extends ACLRDTECTest {
             // to allow SolrResourceLoader to load files from outside the instance's directory
             Properties props = System.getProperties();
             props.setProperty("solr.allow.unsafe.resourceloading", "true");
-            // ACLRDTEC1_testset ; ACLRDTEC1_training;
-            solrCoreName = "ACLRDTEC1_training";
+            // see available two ACL RD-TEC 1.0 solr core name in 'core.properties'
+            // Options: 1) ACLRDTEC1_testset ; 2) ACLRDTEC1_training;
+            solrCoreName = "ACLRDTEC1_testset";
+
+            if (solrCoreName.equals("ACLRDTEC1_training")) {
+                EVAL_CONDITION_MIN_TERM_TOTAL_FREQUENCY = 2;
+                EVAL_CONDITION_MIN_TERM_CONTEXT_FREQUENCY = 2;
+                LOG.info("increase mtf = " + EVAL_CONDITION_MIN_TERM_TOTAL_FREQUENCY +
+                        ", mtcf = " + EVAL_CONDITION_MIN_TERM_CONTEXT_FREQUENCY);
+            }
+
             AppATEACLRDTECTest appATETest = new AppATEACLRDTECTest(solrHome.toString(), solrCoreName);
 
             boolean reindex = false;

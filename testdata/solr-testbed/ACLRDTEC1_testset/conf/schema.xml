@@ -91,13 +91,13 @@
         <fieldType name="text_general" class="solr.TextField" positionIncrementGap="100">
             <analyzer type="index">
                 <tokenizer class="solr.StandardTokenizerFactory"/>
-                <filter class="solr.StopFilterFactory" ignoreCase="true" words="smart-stop-list.txt"/>
+                <filter class="solr.StopFilterFactory" ignoreCase="true" words="../../resource/smart-stop-list.txt"/>
                 <!-- in this example, we will only use synonyms at query time <filter class="solr.SynonymFilterFactory" synonyms="index_synonyms.txt" ignoreCase="true" expand="false"/> -->
                 <filter class="solr.LowerCaseFilterFactory"/>
             </analyzer>
             <analyzer type="query">
                 <tokenizer class="solr.StandardTokenizerFactory"/>
-                <filter class="solr.StopFilterFactory" ignoreCase="true" words="smart-stop-list.txt"/>
+                <filter class="solr.StopFilterFactory" ignoreCase="true" words="../../resource/smart-stop-list.txt"/>
                 <filter class="solr.SynonymFilterFactory" synonyms="synonyms.txt" ignoreCase="true" expand="true"/>
                 <filter class="solr.LowerCaseFilterFactory"/>
             </analyzer>
@@ -117,7 +117,7 @@
                 -->
                 <filter class="solr.StopFilterFactory"
                         ignoreCase="true"
-                        words="smart-stop-list.txt"/>
+                        words="../../resource/smart-stop-list.txt"/>
 
                 <filter class="solr.LowerCaseFilterFactory"/>
                 <filter class="solr.EnglishPossessiveFilterFactory"/>
@@ -132,7 +132,7 @@
                 <filter class="solr.SynonymFilterFactory" synonyms="synonyms.txt" ignoreCase="true" expand="true"/>
                 <filter class="solr.StopFilterFactory"
                         ignoreCase="true"
-                        words="smart-stop-list.txt"/>
+                        words="../../resource/smart-stop-list.txt"/>
                 <filter class="solr.LowerCaseFilterFactory"/>
                 <filter class="solr.EnglishPossessiveFilterFactory"/>
                 <filter class="solr.KeywordMarkerFilterFactory" protected="protwords.txt"/>
@@ -218,94 +218,71 @@
             -->
         <fieldType name="jate_text_2_ngrams" class="solr.TextField" positionIncrementGap="100">
             <analyzer type="index">
-                <!-- Solr standard filter to cleanse html unicode characters -->
-                <charFilter class="solr.PatternReplaceCharFilterFactory" pattern="\\u0027" replacement=" ' " />
-                <charFilter class="solr.PatternReplaceCharFilterFactory" pattern="\\u000a" replacement=" \\n " />
-                <charFilter class="solr.PatternReplaceCharFilterFactory" pattern="\\u0009" replacement=" \\t " />
-                <charFilter class="solr.PatternReplaceCharFilterFactory" pattern="\\u0008" replacement=" \\b " />
-                <charFilter class="solr.PatternReplaceCharFilterFactory" pattern="\\u000d" replacement=" \\r " />
-                <charFilter class="solr.PatternReplaceCharFilterFactory" pattern="\\u000c" replacement=" \\f " />
-                <charFilter class="solr.PatternReplaceCharFilterFactory" pattern="\\u0022" replacement=" &quot; " />
-                <charFilter class="solr.PatternReplaceCharFilterFactory" pattern="\\u005c" replacement=" \\ " />
-                <charFilter class="solr.PatternReplaceCharFilterFactory" pattern="\\u003c" replacement=" &lt; " />
-                <charFilter class="solr.PatternReplaceCharFilterFactory" pattern="\\u003e" replacement=" &gt; " />
-                <charFilter class="solr.PatternReplaceCharFilterFactory" pattern="\\u003d" replacement=" = " />
-                <charFilter class="solr.PatternReplaceCharFilterFactory" pattern="\\u0026" replacement=" &amp; " />
                 <!-- Solr standard filter to cleanse html entities -->
-                <charFilter class="solr.HTMLStripCharFilterFactory"/>
+                <!-- HTMLStripCharFilterFactory MUST be enabled for ACL RD-TEC 1.0 corpus to unescape Html characters, e.g, "&amp;quot;" -->
+                <!-- This may not neccessarily need if JATEUtil is used to pre-process the corpus-->
+                <!--<charFilter class="solr.HTMLStripCharFilterFactory"/>-->
 
                 <tokenizer class="org.apache.lucene.analysis.jate.OpenNLPTokenizerFactory"
-                           sentenceModel="en-sent.bin"
-                           tokenizerModel="en-token.bin"/>
+                           sentenceModel="../../resource/en-sent.bin"
+                           tokenizerModel="../../resource/en-token.bin"/>
                 <!-- Asciifolding that converts alphabetic, numeric, and symbolic Unicode characters to ASCII characters-->
                 <filter class="solr.ASCIIFoldingFilterFactory"/>
 
                 <filter class="org.apache.lucene.analysis.jate.OpenNLPPOSTaggerFactory"
                         posTaggerClass="uk.ac.shef.dcs.jate.nlp.opennlp.POSTaggerOpenNLP"
-                        posTaggerModel="en-pos-maxent.bin"/>
+                        posTaggerModel="../../resource/en-pos-maxent.bin"/>
 
-                <filter class="org.apache.lucene.analysis.jate.ComplexShingleFilterFactory" minTokens="2" maxTokens="20"
+                <filter class="org.apache.lucene.analysis.jate.ComplexShingleFilterFactory" minTokens="2" maxTokens="21"
                         maxCharLength="500" minCharLength="1" removeLeadingStopWords="true"
                         removeTrailingStopWords="true" removeLeadingSymbolicTokens="true"
                         removeTrailingSymbolicTokens="true"
                         stripAnySymbolChars="false"
                         stripLeadingSymbolChars="true" stripTrailingSymbolChars="true"
-                        stopWords="smart-stop-list.txt" stopWordsIgnoreCase="true"
+                        stopWords="../../resource/smart-stop-list.txt" stopWordsIgnoreCase="true"
                         outputUnigrams="true" outputUnigramsIfNoShingles="false" tokenSeparator=" "/>
 
                 <filter class="solr.LowerCaseFilterFactory"/>
 
                 <filter class="org.apache.lucene.analysis.jate.EnglishLemmatisationFilterFactory"
-                    lemmaResourceDir="lemmatiser"/>
+                    lemmaResourceDir="../../resource/lemmatiser"/>
                 <!-- standard Solr stop words filter -->
-                <filter class="solr.StopFilterFactory" ignoreCase="true" words="smart-stop-list.txt"/>
+                <filter class="solr.StopFilterFactory" ignoreCase="true" words="../../resource/smart-stop-list.txt"/>
             </analyzer>
         </fieldType>
 
         <!--a configuration for PoS based candidate extraction-->
         <fieldType name="jate_text_2_terms" class="solr.TextField" positionIncrementGap="100">
             <analyzer type="index">
-                <!-- Solr standard filter to cleanse html unicode characters -->
-                <charFilter class="solr.PatternReplaceCharFilterFactory" pattern="\\u0027" replacement=" ' " />
-                <charFilter class="solr.PatternReplaceCharFilterFactory" pattern="\\u000a" replacement=" \\n " />
-                <charFilter class="solr.PatternReplaceCharFilterFactory" pattern="\\u0009" replacement=" \\t " />
-                <charFilter class="solr.PatternReplaceCharFilterFactory" pattern="\\u0008" replacement=" \\b " />
-                <charFilter class="solr.PatternReplaceCharFilterFactory" pattern="\\u000d" replacement=" \\r " />
-                <charFilter class="solr.PatternReplaceCharFilterFactory" pattern="\\u000c" replacement=" \\f " />
-                <charFilter class="solr.PatternReplaceCharFilterFactory" pattern="\\u0022" replacement=" &quot; " />
-                <charFilter class="solr.PatternReplaceCharFilterFactory" pattern="\\u005c" replacement=" \\ " />
-                <charFilter class="solr.PatternReplaceCharFilterFactory" pattern="\\u003c" replacement=" &lt; " />
-                <charFilter class="solr.PatternReplaceCharFilterFactory" pattern="\\u003e" replacement=" &gt; " />
-                <charFilter class="solr.PatternReplaceCharFilterFactory" pattern="\\u003d" replacement=" = " />
-                <charFilter class="solr.PatternReplaceCharFilterFactory" pattern="\\u0026" replacement=" &amp; " />
                 <!-- Solr standard filter to cleanse html entities -->
-                <charFilter class="solr.HTMLStripCharFilterFactory"/>
+                <!-- HTMLStripCharFilterFactory MUST be enabled for ACL RD-TEC 1.0 corpus to unescape Html characters, e.g, "&amp;quot;" -->
+                <!-- This may not neccessarily need if JATEUtil is used to pre-process the corpus-->
+                <!--<charFilter class="solr.HTMLStripCharFilterFactory"/>-->
                 <!--<tokenizer class="solr.StandardTokenizerFactory" />-->
                 <tokenizer class="org.apache.lucene.analysis.jate.OpenNLPTokenizerFactory"
-						   sentenceModel="en-sent.bin"
-						   tokenizerModel="en-token.bin"/>
+						   sentenceModel="../../resource/en-sent.bin"
+						   tokenizerModel="../../resource/en-token.bin"/>
   			    <!-- Asciifolding that converts alphabetic, numeric, and symbolic Unicode characters to ASCII characters-->
                 <filter class="solr.ASCIIFoldingFilterFactory"/>
                 <filter class="org.apache.lucene.analysis.jate.OpenNLPPOSTaggerFactory"
                         posTaggerClass="uk.ac.shef.dcs.jate.nlp.opennlp.POSTaggerOpenNLP"
-                        posTaggerModel="en-pos-maxent.bin"/>
+                        posTaggerModel="../../resource/en-pos-maxent.bin"/>
 
                 <filter class="org.apache.lucene.analysis.jate.OpenNLPRegexChunkerFactory"
                         patterns="aclrdtec.patterns"
-                        minTokens="1" maxTokens="50"
+                        minTokens="1" maxTokens="20"
                         maxCharLength="500" minCharLength="1" removeLeadingStopWords="true"
                         removeTrailingStopWords="true" removeLeadingSymbolicTokens="true"
                         removeTrailingSymbolicTokens="true"
                         stripAnySymbolChars="false"
                         stripLeadingSymbolChars="true" stripTrailingSymbolChars="true"
-                        stopWords="smart-stop-list.txt" stopWordsIgnoreCase="true"/>
-
+                        stopWords="../../resource/smart-stop-list.txt" stopWordsIgnoreCase="true"/>
 
                 <filter class="solr.LowerCaseFilterFactory" />
                 <filter class="org.apache.lucene.analysis.jate.EnglishLemmatisationFilterFactory"
-                        lemmaResourceDir="lemmatiser"/>
+                        lemmaResourceDir="../../resource/lemmatiser"/>
                 <!-- standard Solr stop words filter -->
-                <filter class="solr.StopFilterFactory" ignoreCase="true" words="smart-stop-list.txt"/>
+                <filter class="solr.StopFilterFactory" ignoreCase="true" words="../../resource/smart-stop-list.txt"/>
             </analyzer>
         </fieldType>        
         <!-- ###################### JATE End #############################-->

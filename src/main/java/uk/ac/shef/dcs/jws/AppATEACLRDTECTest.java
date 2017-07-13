@@ -60,7 +60,7 @@ public class AppATEACLRDTECTest extends ACLRDTECTest {
             props.setProperty("solr.allow.unsafe.resourceloading", "true");
             // see available two ACL RD-TEC 1.0 solr core name in 'core.properties'
             // Options: 1) ACLRDTEC1_testset ; 2) ACLRDTEC1_training;
-            solrCoreName = "ACLRDTEC1_testset";
+            solrCoreName = "ACLRDTEC1_training";
 
             if (solrCoreName.equals("ACLRDTEC1_training")) {
                 EVAL_CONDITION_MIN_TERM_TOTAL_FREQUENCY = 2;

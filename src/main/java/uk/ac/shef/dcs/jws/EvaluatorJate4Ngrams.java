@@ -10,10 +10,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 /**
- * This class utilise JATE2 Scorer to compute evaluation metrics and generate evaluation report
+ * Created by jieg on 5/29/2017.
  */
-public class Evaluator extends Scorer{
-
+public class EvaluatorJate4Ngrams extends Scorer {
     protected final static String FILE_TYPE_JSON = "json";
     protected final static String FILE_TYPE_CSV = "csv";
 
@@ -27,10 +26,12 @@ public class Evaluator extends Scorer{
     protected static int EVAL_CONDITION_CHAR_RANGE_MAX = -1;
     protected static int EVAL_CONDITION_TOKEN_RANGE_MIN = 1;
     protected static int EVAL_CONDITION_TOKEN_RANGE_MAX = 5;
-    protected static int[] EVAL_CONDITION_TOP_N = {50, 100, 300, 500, 800, 1000, 1500, 2000, 3000, 4000, 5000, 6000};
+    // 50, 100, 300, 500, 800, 1000, 1500, 2000, 3000, 4000, 5000, 6000
+    protected static int[] EVAL_CONDITION_TOP_N = {};
 
     // top K percentage of candidates; K means percentage here
-    public static int[] EVAL_CONDITION_TOP_K = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25, 30};
+    //1, 2, 3, 4 , 5, 6, 7, 8, 9, 10, 15, 20, 25, 30
+    public static int[] EVAL_CONDITION_TOP_K = {};
     // whether to compute the AvP defined in [Astrakhantsev 2016]
     // Astrakhantsev, N. (2016). ATR4S: Toolkit with State-of-the-art Automatic Terms Recognition Methods in Scala. arXiv preprint arXiv:1611.07804.
     public static Boolean IS_COMPUTE_ATR4S_AvP = Boolean.FALSE;
@@ -46,11 +47,19 @@ public class Evaluator extends Scorer{
         Path ACL_1_CORPUS_CONCEPT_FILE = Paths.get(workingDir, "src", "test", "resources",
                 "eval", "ACL_RD-TEC", "terms.txt");
 
-        String datasetName = "aclrdtec1";//args[0];
-        String ateOutputFolder = "C:\\Data\\jate\\jate4supervision\\acl-1-index\\baseline\\setting2";// args[1];
-        String ateOutputType = "json";//args[2];
-        String outFile = "C:\\Data\\jate\\jate4supervision\\acl-1-index\\baseline\\setting2\\acl_1_baseline_set_eval_setting2.csv";//args[3];
-        String gsFile = ACL_1_CORPUS_CONCEPT_FILE.toString();//args[4];
+        Path TTC_EN_MOBILE_CORPUS_CONCEPT_FILE = Paths.get("c:", "Users", "jieg",
+                "Google Drive", "OAK Group", "jateResult4Yuan", "goldstandards", "gsTerms",
+                "ttc-mobile-tech-gsTerms.txt");
+        Path TTC_EN_WIND_CORPUS_CONCEPT_FILE = Paths.get("c:", "Users", "jieg",
+                "Google Drive", "OAK Group", "jateResult4Yuan", "goldstandards", "gsTerms",
+                "ttc-wind-energy-gsTerms.txt");
+
+        // genia, aclrdtec1, ttcMobileEn, ttcWindEn
+        String datasetName = "ttcWindEn";//args[0];
+        String ateOutputFolder = "C:\\Users\\jieg\\Google Drive\\OAK Group\\jateResult4Yuan\\Training_testingData\\test\\en_wind";// args[1];
+        String ateOutputType = "csv";//args[2];
+        String outFile = "C:\\Users\\jieg\\Google Drive\\OAK Group\\jateResult4Yuan\\Training_testingData\\test\\en_wind\\en_wind_4_test_eval.txt";//args[3];
+        String gsFile = TTC_EN_WIND_CORPUS_CONCEPT_FILE.toString();//args[4];
 
 
         if (datasetName.equals("genia")) {
@@ -62,11 +71,10 @@ public class Evaluator extends Scorer{
                     EVAL_CONDITION_TOKEN_RANGE_MIN, EVAL_CONDITION_TOKEN_RANGE_MAX,
                     EVAL_CONDITION_TOP_N, EVAL_CONDITION_TOP_K, IS_COMPUTE_ATR4S_AvP);
         } else {
-            gsFile = ACL_1_CORPUS_CONCEPT_FILE.toString();
             // no need to do prune&lemmatisation for ACL RD-TEC
-            createReportACLRD(null, ateOutputFolder, ateOutputType,
+            createReportACLRD(lemmatiser, ateOutputFolder, ateOutputType,
                     gsFile, outFile,
-                    false, false, false,
+                    false, false, true,
                     -1, -1,
                     -1, -1,
                     EVAL_CONDITION_TOP_N, EVAL_CONDITION_TOP_K, IS_COMPUTE_ATR4S_AvP);
